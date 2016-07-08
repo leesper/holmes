@@ -160,6 +160,9 @@ type innerLogger struct{
 }
 
 func (l innerLogger)doPrintf(level LogLevel, format string, v ...interface{}) {
+  if l.logger == nil {
+    return
+  }
   if level >= l.level {
     pc, fn, ln, ok := runtime.Caller(2)  // 2 steps up the stack frame
     if !ok {
