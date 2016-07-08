@@ -8,10 +8,10 @@ import (
 
 func TestStdErrLogger(t *testing.T) {
   defer Start().Stop()
-  Info("%s", "Hello, Mike")
-  Warn("%s", "This might be painful but...")
-  Error("%s", "You have to go through it until sunshine comes out")
-  Info("%s", "Those were the days hard work forever pays")
+  Infoln("Hello, Mike")
+  Warnln("This might be painful but...")
+  Errorln("You have to go through it until sunshine comes out")
+  Infoln("Those were the days hard work forever pays")
 }
 
 func TestFileLoggerEveryMinute(t *testing.T) {

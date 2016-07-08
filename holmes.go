@@ -164,17 +164,8 @@ func (l innerLogger)doPrintf(level LogLevel, format string, v ...interface{}) {
     return
   }
   if level >= l.level {
-    pc, fn, ln, ok := runtime.Caller(2)  // 2 steps up the stack frame
-    if !ok {
-      fn = "???"
-      ln = 0
-    }
-    function := "???"
-    caller := runtime.FuncForPC(pc)
-    if caller != nil {
-      function = caller.Name()
-    }
-    format = fmt.Sprintf("%5s [%s] (%s:%d) - %s", tagName[level], path.Base(function), path.Base(fn), ln, format)
+    funcName, fileName, lineNum := getRuntimeInfo()
+    format = fmt.Sprintf("%5s [%s] (%s:%d) - %s", tagName[level], path.Base(funcName), path.Base(fileName), lineNum, format)
     l.logger.Printf(format, v...)
     if l.isStdout {
       log.Printf(format, v...)
@@ -183,6 +174,38 @@ func (l innerLogger)doPrintf(level LogLevel, format string, v ...interface{}) {
       os.Exit(1)
     }
   }
+}
+
+func (l innerLogger)doPrintln(level LogLevel, v ...interface{}) {
+  if l.logger == nil {
+    return
+  }
+  if level >= l.level {
+    funcName, fileName, lineNum := getRuntimeInfo()
+    prefix := fmt.Sprintf("%5s [%s] (%s:%d) - ", tagName[level], path.Base(funcName), path.Base(fileName), lineNum)
+    value := fmt.Sprintf("%s%s", prefix, fmt.Sprint(v...))
+    l.logger.Println(value)
+    if l.isStdout {
+      log.Println(value)
+    }
+    if level == FATAL {
+      os.Exit(1)
+    }
+  }
+}
+
+func getRuntimeInfo() (string, string, int) {
+  pc, fn, ln, ok := runtime.Caller(3)  // 3 steps up the stack frame
+  if !ok {
+    fn = "???"
+    ln = 0
+  }
+  function := "???"
+  caller := runtime.FuncForPC(pc)
+  if caller != nil {
+    function = caller.Name()
+  }
+  return function, fn, ln
 }
 
 func DebugLevel(l innerLogger) innerLogger {
@@ -250,4 +273,24 @@ func Error(format string, v ...interface{}) {
 
 func Fatal(format string, v ...interface{}) {
   loggerInstance.doPrintf(FATAL, format, v...)
+}
+
+func Debugln(v ...interface{}) {
+  loggerInstance.doPrintln(DEBUG, v...)
+}
+
+func Infoln(v ...interface{}) {
+  loggerInstance.doPrintln(INFO, v...)
+}
+
+func Warnln(v ...interface{}) {
+  loggerInstance.doPrintln(WARN, v...)
+}
+
+func Errorln(v ...interface{}) {
+  loggerInstance.doPrintln(ERROR, v...)
+}
+
+func Fatalln(v ...interface{}) {
+  loggerInstance.doPrintln(FATAL, v...)
 }
