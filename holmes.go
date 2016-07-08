@@ -145,7 +145,7 @@ func getLogFileName(t time.Time) string {
   hour := now.Hour()
   minute := now.Minute()
   pid := os.Getpid()
-  return fmt.Sprintf("%s.%04d-%02d-%02d-%02d-%2d.%d.log",
+  return fmt.Sprintf("%s.%04d-%02d-%02d-%02d-%02d.%d.log",
     proc, year, month, day, hour, minute, pid)
 }
 
