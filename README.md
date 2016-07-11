@@ -14,7 +14,7 @@ Add one line at the top of your main function, and you can do somg logging by ca
 
 Features
 -----
-* Support creating new log file every hour/minute;
+* Support creating new log file every hour/minute(rolling);
 * Can also print to stdout while writing to file;
 * Support levels: debug, info, warn, error, fatal;
 * Can change log file path by passing LogFilePath("./log") to holmes.Start()
