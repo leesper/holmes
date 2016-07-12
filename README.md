@@ -19,6 +19,7 @@ Features
 * Support levels: debug, info, warn, error, fatal;
 * Can change log file path by passing LogFilePath("./log") to holmes.Start()
 * Generating log files named PROGRAM.YYYY-MM-DD-HH-MM.PID.log
+* Support printing stacks of all go-routines when crashed
 
 Things you can change
 -----
@@ -32,6 +33,7 @@ It is by default, a debug-level and print-to-stdout logger, you can pass paramet
 * EveryHour - logging to different file every hour
 * EveryMinute - logging to different file every minute
 * AlsoStdout - also logging to stdout
+* PrintStack - print stack infos of all go-routines when crashed
 
 
 ```go

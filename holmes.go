@@ -56,6 +56,14 @@ func Start(decorators ...func(innerLogger) innerLogger) innerLogger {
 
 func (l innerLogger)Stop() {
   if atomic.CompareAndSwapInt32(&l.stopped, 0, 1) {
+    if l.printStack {
+      traceInfo := make([]byte, 1 << 16)
+      n := runtime.Stack(traceInfo, true)
+      l.logger.Printf("%s", traceInfo[:n])
+      if l.isStdout {
+        log.Printf("%s", traceInfo[:n])
+      }
+    }
     if l.segment != nil {
       l.segment.Close()
     }
@@ -157,6 +165,7 @@ type innerLogger struct{
   logPath string
   unit time.Duration
   isStdout bool
+  printStack bool
 }
 
 func (l innerLogger)doPrintf(level LogLevel, format string, v ...interface{}) {
@@ -252,6 +261,11 @@ func EveryMinute(l innerLogger) innerLogger {
 
 func AlsoStdout(l innerLogger) innerLogger {
   l.isStdout = true
+  return l
+}
+
+func PrintStack(l innerLogger) innerLogger {
+  l.printStack = true
   return l
 }
 

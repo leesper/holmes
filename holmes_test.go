@@ -52,6 +52,16 @@ func TestAlsoStdout(t *testing.T) {
   }
 }
 
+func TestPrintStack(t *testing.T) {
+  defer Start(LogFilePath("./log"), EveryHour, PrintStack, AlsoStdout).Stop()
+  for i := 0; i < 100; i++ {
+    Info("%s", "If by life you were deceived,")
+    Warn("%s", "Don't be dismal, don't be wild!")
+    Error("%s", "In the day of grief, be mild.")
+    Info("%s", "Merry days will come, believe.")
+  }
+}
+
 func BenchmarkFileLoggerSingleGoroutine(b *testing.B) {
   defer Start(LogFilePath("./log"), EveryHour).Stop()
   b.ResetTimer()
