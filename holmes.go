@@ -192,7 +192,7 @@ func (l innerLogger)doPrintln(level LogLevel, v ...interface{}) {
   if level >= l.level {
     funcName, fileName, lineNum := getRuntimeInfo()
     prefix := fmt.Sprintf("%5s [%s] (%s:%d) - ", tagName[level], path.Base(funcName), path.Base(fileName), lineNum)
-    value := fmt.Sprintf("%s %s", prefix, fmt.Sprint(v...))
+    value := fmt.Sprintf("%s%s", prefix, fmt.Sprint(v...))
     l.logger.Println(value)
     if l.isStdout {
       log.Println(value)
