@@ -126,7 +126,8 @@ func (ls *logSegment)Write(p []byte) (n int, err error) {
       ls.logFile = nil
       name := getLogFileName(current)
       ls.logFile, err = os.Create(path.Join(ls.logPath, name))
-      if err != nil { // log into stderr if we can't create new file
+      if err != nil {
+        // log into stderr if we can't create new file
         fmt.Fprintln(os.Stderr, err)
         ls.logFile = os.Stderr
       } else {
