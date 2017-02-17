@@ -45,8 +45,8 @@ func TestFileLoggerMultipleGoroutine(t *testing.T) {
 func TestAlsoStdout(t *testing.T) {
 	defer Start(LogFilePath("./log"), EveryHour, AlsoStdout).Stop()
 	for i := 0; i < 100; i++ {
-		Infof("%s", "If by life you were deceived,")
-		Warnf("%s", "Don't be dismal, don't be wild!")
+		Infof("%s\n", "If by life you were deceived,")
+		Warnf("%s\n", "Don't be dismal, don't be wild!")
 		Errorf("%s", "In the day of grief, be mild.")
 		Infof("%s", "Merry days will come, believe.")
 	}
