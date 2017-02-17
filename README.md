@@ -42,10 +42,10 @@ import "github.com/leesper/holmes"
 func main() {
   // log files put in ./log, create new one every hour, also print to stdout
   defer holmes.Start(LogFilePath("./log"), EveryHour, AlsoStdout).Stop()
-  holmes.Info("%s", "If by life you were deceived,")
-  holmes.Warn("%s", "Don't be dismal, don't be wild!")
-  holmes.Error("%s", "In the day of grief, be mild.")
-  holmes.Info("%s", "Merry days will come, believe.")
+  holmes.Infof("%s", "If by life you were deceived,")
+  holmes.Warnf("%s", "Don't be dismal, don't be wild!")
+  holmes.Errorf("%s", "In the day of grief, be mild.")
+  holmes.Infof("%s", "Merry days will come, believe.")
   ...
 }
 ```
