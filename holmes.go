@@ -205,7 +205,7 @@ func (l Logger) doPrintln(level LogLevel, v ...interface{}) {
 		value := fmt.Sprintf("%s%s", prefix, fmt.Sprintln(v...))
 		l.logger.Print(value)
 		if l.isStdout {
-			log.Println(value)
+			log.Print(value)
 		}
 		if level == FATAL {
 			os.Exit(1)
