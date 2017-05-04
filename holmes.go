@@ -52,6 +52,8 @@ func Start(decorators ...func(Logger) Logger) Logger {
 		}
 		if segment != nil {
 			logger = log.New(segment, "", log.LstdFlags)
+		} else if loggerInstance.isStdout {
+			logger = log.New(os.Stdout, "", log.LstdFlags)
 		} else {
 			logger = log.New(os.Stderr, "", log.LstdFlags)
 		}
@@ -186,9 +188,9 @@ func (l Logger) doPrintf(level LogLevel, format string, v ...interface{}) {
 		funcName, fileName, lineNum := getRuntimeInfo()
 		format = fmt.Sprintf("%5s [%s] (%s:%d) - %s", tagName[level], path.Base(funcName), path.Base(fileName), lineNum, format)
 		l.logger.Printf(format, v...)
-		if l.isStdout {
-			log.Printf(format, v...)
-		}
+		// if l.isStdout {
+		// 	log.Printf(format, v...)
+		// }
 		if level == FATAL {
 			os.Exit(1)
 		}

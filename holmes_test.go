@@ -3,8 +3,9 @@ package holmes
 import (
 	"sync"
 	"testing"
-	// "time"
 )
+
+// "time"
 
 func TestStdErrLogger(t *testing.T) {
 	defer Start().Stop()
@@ -43,13 +44,11 @@ func TestFileLoggerMultipleGoroutine(t *testing.T) {
 }
 
 func TestAlsoStdout(t *testing.T) {
-	defer Start(LogFilePath("./log"), EveryHour, AlsoStdout).Stop()
-	for i := 0; i < 100; i++ {
-		Infof("%s\n", "If by life you were deceived,")
-		Warnf("%s\n", "Don't be dismal, don't be wild!")
-		Errorf("%s", "In the day of grief, be mild.")
-		Infof("%s", "Merry days will come, believe.")
-	}
+	defer Start(EveryHour, AlsoStdout).Stop()
+	Infof("%s\n", "If by life you were deceived,")
+	Warnf("%s\n", "Don't be dismal, don't be wild!")
+	Errorf("%s", "In the day of grief, be mild.")
+	Infof("%s", "Merry days will come, believe.")
 }
 
 func TestPrintStack(t *testing.T) {
