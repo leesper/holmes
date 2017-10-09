@@ -1,19 +1,11 @@
-Holmes
-=======
+# Holmes
 
-Golang logging package
+Golang server logging package
 
+[![GitHub forks](https://img.shields.io/github/forks/leesper/holmes.svg)](https://github.com/leesper/holmes/network) [![GitHub stars](https://img.shields.io/github/stars/leesper/holmes.svg)](https://github.com/leesper/holmes/stargazers) [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/leesper/tao/master/LICENSE)
 
-installation
-------------
-    go get github.com/leesper/holmes
+## Features
 
-Usage
------
-Add one line at the top of your main function, and you can do somg logging by calling such as holmes.Debug(...)
-
-Features
------
 * Support creating new log file every hour/minute(rolling);
 * Can also print to stdout while writing to file;
 * Support levels: debug, info, warn, error, fatal;
@@ -21,8 +13,7 @@ Features
 * Generating log files named PROGRAM.YYYY-MM-DD-HH-MM.PID.log
 * Support printing stacks of all go-routines when crashed
 
-Things you can change
------
+### Things you can change
 It is by default, a debug-level and print-to-stdout logger, you can pass parameters to change its behavior:
 * DebugLevel - change logger to debug level
 * InfoLevel - change logger to info level
@@ -35,6 +26,19 @@ It is by default, a debug-level and print-to-stdout logger, you can pass paramet
 * AlsoStdout - also logging to stdout
 * PrintStack - print stack infos of all go-routines when crashed
 
+### Benchmark
+```
+BenchmarkFileLoggerSingleGoroutine-4  	  100000	     17694 ns/op
+BenchmarkFileLoggerMultipleGoroutine-4	   50000	     37284 ns/op
+```
+
+## Installation
+
+`go get -u -v github.com/leesper/holmes`
+
+## Usage
+
+Add one line at the top of your main function, and you can do somg logging by calling such as holmes.Debug(...)
 
 ```go
 import "github.com/leesper/holmes"
@@ -57,9 +61,6 @@ output:
 2016/07/08 11:25:48  INFO [example.main] (example.go:51) - Merry days will come, believe.
 ```
 
-Benchmark
------
-```
-BenchmarkFileLoggerSingleGoroutine-4  	  100000	     17694 ns/op
-BenchmarkFileLoggerMultipleGoroutine-4	   50000	     37284 ns/op
-```
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate.
