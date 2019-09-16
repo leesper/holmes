@@ -267,6 +267,12 @@ func LogFilePath(p string) func(Logger) Logger {
 	}
 }
 
+// EveryDay sets new log file created every day.
+func EveryDay(l Logger) Logger {
+	l.unit = time.Hour * 24
+	return l
+}
+
 // EveryHour sets new log file created every hour.
 func EveryHour(l Logger) Logger {
 	l.unit = time.Hour
